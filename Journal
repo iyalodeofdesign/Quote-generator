@@ -1,0 +1,63 @@
+# Development Journal
+
+## Task 1 - Planning the project
+
+### What I worked on
+
+I started by reviewing the project requirements and deciding on a simple application to build. I chose to create a Quote Generator.
+
+The goal of the application was to allow users to view inspirational or motivational quotes and generate a new quote by clicking a button.
+
+### Decisions I made
+
+I decided to keep the scope of the project small and focus on the main functionality instead of adding unnecessary features.
+
+The core features I identified were:
+
+Displaying a quote
+Generating a new quote when the user clicks a button
+Creating a simple and easy-to-use interface
+
+I chose HTML, CSS, and JavaScript because they were sufficient for building the core functionality.
+
+
+
+## Task 2 – Building the interface
+
+### What I worked on
+
+I created the basic structure and design of the Quote Generator.
+
+### Decisions I made
+
+I chose a simple layout so that users could immediately understand how to interact with the application.
+I decided to use a clean and minimal design so that the quote would remain the main focus of the application.
+
+
+## Task 3 – Adjusting accesibility
+
+### What I worked on
+
+Removing the toggle. Not just hiding it — pulling out the dark theme styles and the switching logic so there's no dead code or half-supported state left behind.
+Changed the primary color to a Purple that actually works. Purple can get muddy or low-contrast fast, especially in mid-tones used for buttons or links. I picked a shade knowing it would need to hold a 4.5:1 ratio against the light background, not just look right at first glance.
+
+### Challenges
+
+I discovered that users could submit an empty habit.
+
+### How I solved them
+
+I added validation to prevent empty values from being added to the habit list.
+
+
+## Task 4 – Testing and documentation
+
+### What I worked on
+
+I tested the main features of the application and fixed issues that appeared during testing.
+
+I also created the README.md and journal.md files.
+
+### Final result
+
+The application allows users to generate, share, listen and favorite a quote
