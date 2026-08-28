@@ -1,5 +1,6 @@
 /* ==========================================================================
    QUOTE GENERATOR - APPLICATION LOGIC (app.js)
+   High-Contrast WCAG AAA Accessible Edition
    ========================================================================== */
 
 (function () {
@@ -14,14 +15,12 @@
   let speechUtterance = null;
 
   // --- DOM Elements ---
-  const quoteCard = document.getElementById('quote-card');
   const quoteText = document.getElementById('quote-text');
   const quoteAuthor = document.getElementById('quote-author');
   const quoteCategoryTag = document.getElementById('quote-category-tag');
   const quoteLengthBadge = document.getElementById('quote-length-badge');
 
   const newQuoteBtn = document.getElementById('new-quote-btn');
-  const refreshIcon = document.getElementById('refresh-icon');
 
   const copyBtn = document.getElementById('copy-btn');
   const copyIcon = document.getElementById('copy-icon');
@@ -29,13 +28,12 @@
   const copyBtnText = document.getElementById('copy-btn-text');
 
   const speakBtn = document.getElementById('speak-btn');
+  const speakBtnText = document.getElementById('speak-btn-text');
+
   const favoriteBtn = document.getElementById('favorite-btn');
   const favBtnText = document.getElementById('fav-btn-text');
 
   const shareBtn = document.getElementById('share-btn');
-  const themeToggleBtn = document.getElementById('theme-toggle-btn');
-  const themeMoonIcon = document.getElementById('theme-moon-icon');
-  const themeSunIcon = document.getElementById('theme-sun-icon');
 
   const favoritesToggleBtn = document.getElementById('favorites-toggle-btn');
   const favCountBadge = document.getElementById('fav-count-badge');
@@ -45,19 +43,18 @@
   const toastContainer = document.getElementById('toast-container');
   const categoryTabBtns = document.querySelectorAll('.tab-btn');
 
-  // Accent Colors Mapping per Category
+  // Accent Colors Mapping per Category (High Contrast WCAG AAA Compliant)
   const ACCENT_COLORS = {
-    all: { hex: '#3b82f6', rgb: '59, 130, 246' },
-    life: { hex: '#10b981', rgb: '16, 185, 129' },
-    love: { hex: '#f43f5e', rgb: '244, 63, 94' },
-    courage: { hex: '#f59e0b', rgb: '245, 158, 11' },
-    strength: { hex: '#8b5cf6', rgb: '139, 92, 246' }
+    all: { hex: '#6b21a8', rgb: '107, 33, 168' },
+    life: { hex: '#047857', rgb: '4, 120, 87' },
+    love: { hex: '#be123c', rgb: '190, 18, 60' },
+    courage: { hex: '#b45309', rgb: '180, 83, 9' },
+    strength: { hex: '#4338ca', rgb: '67, 56, 202' }
   };
 
   // --- Initialization ---
   function init() {
     loadFavoritesFromStorage();
-    loadThemeFromStorage();
     setupEventListeners();
     generateNewQuote(false);
   }
@@ -87,7 +84,6 @@
     const randomIndex = Math.floor(Math.random() * pool.length);
     const selected = pool[randomIndex];
 
-    // Keep history limited to last 5 quotes
     recentQuoteIds.push(selected.id);
     if (recentQuoteIds.length > 5) {
       recentQuoteIds.shift();
@@ -118,7 +114,7 @@
 
         setTimeout(() => {
           quoteText.classList.remove('fade-in');
-        }, 400);
+        }, 350);
       }, 200);
     } else {
       renderQuote(quote);
@@ -176,16 +172,16 @@
 
   function handleCopySuccess() {
     copyIcon.style.display = 'none';
-    checkIcon.style.display = 'block';
+    checkIcon.style.display = 'inline-block';
     copyBtnText.textContent = 'Copied!';
     copyBtn.style.borderColor = 'var(--accent-life)';
 
     showToast('Quote copied to clipboard!', '📋');
 
     setTimeout(() => {
-      copyIcon.style.display = 'block';
+      copyIcon.style.display = 'inline-block';
       checkIcon.style.display = 'none';
-      copyBtnText.textContent = 'Copy';
+      copyBtnText.textContent = 'Copy Quote';
       copyBtn.style.borderColor = '';
     }, 2000);
   }
@@ -217,7 +213,7 @@
     speechUtterance.onstart = () => {
       isSpeaking = true;
       speakBtn.style.borderColor = 'var(--current-accent)';
-      speakBtn.querySelector('span').textContent = 'Pause';
+      if (speakBtnText) speakBtnText.textContent = 'Pause';
     };
 
     speechUtterance.onend = () => {
@@ -238,7 +234,7 @@
     isSpeaking = false;
     if (speakBtn) {
       speakBtn.style.borderColor = '';
-      speakBtn.querySelector('span').textContent = 'Listen';
+      if (speakBtnText) speakBtnText.textContent = 'Listen';
     }
   }
 
@@ -305,11 +301,11 @@
     if (!favorites.length) {
       modalFavoritesList.innerHTML = `
         <div class="empty-favorites">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
           </svg>
-          <p>No saved quotes yet.</p>
-          <small>Click the heart icon on any quote to save it here!</small>
+          <p style="font-size: 1.1rem; font-weight: 700;">No saved quotes yet.</p>
+          <small style="font-size: 0.95rem;">Click the Save button on any quote to add it to your list!</small>
         </div>
       `;
       return;
@@ -321,8 +317,8 @@
         <div class="fav-meta">
           <span class="fav-author">— ${q.author}</span>
           <div class="fav-actions">
-            <button class="fav-action-btn copy-fav-btn" data-id="${q.id}" title="Copy Quote">📋</button>
-            <button class="fav-action-btn delete delete-fav-btn" data-id="${q.id}" title="Remove Favorite">🗑️</button>
+            <button class="fav-action-btn copy-fav-btn" data-id="${q.id}" aria-label="Copy Quote">📋 Copy</button>
+            <button class="fav-action-btn delete delete-fav-btn" data-id="${q.id}" aria-label="Remove Favorite">🗑️ Remove</button>
           </div>
         </div>
       </div>
@@ -360,37 +356,12 @@
     window.open(twitterUrl, '_blank', 'noopener,noreferrer');
   }
 
-  // --- Theme Management ---
-  function loadThemeFromStorage() {
-    const savedTheme = localStorage.getItem('quoteverse_theme') || 'dark';
-    setTheme(savedTheme);
-  }
-
-  function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('quoteverse_theme', theme);
-
-    if (theme === 'light') {
-      themeMoonIcon.style.display = 'none';
-      themeSunIcon.style.display = 'block';
-    } else {
-      themeMoonIcon.style.display = 'block';
-      themeSunIcon.style.display = 'none';
-    }
-  }
-
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-  }
-
   // --- Toast Notifications ---
   function showToast(message, icon = '✨') {
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.innerHTML = `
-      <span class="toast-icon">${icon}</span>
+      <span class="toast-icon" aria-hidden="true">${icon}</span>
       <span>${message}</span>
     `;
 
@@ -416,7 +387,6 @@
     speakBtn.addEventListener('click', toggleSpeech);
     favoriteBtn.addEventListener('click', toggleFavorite);
     shareBtn.addEventListener('click', shareQuote);
-    themeToggleBtn.addEventListener('click', toggleTheme);
 
     // Favorites modal
     favoritesToggleBtn.addEventListener('click', () => {

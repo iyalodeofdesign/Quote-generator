@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuoteVerse - Inspirational Quote Generator</title>
-  <meta name="description" content="Discover inspiring quotes on life, love, courage, and strength. Generate, copy, share, and listen to quotes with a clean, responsive design.">
+  <title>QuoteVerse - High Contrast Accessible Quote Generator</title>
+  <meta name="description" content="Discover inspiring quotes on life, love, courage, and strength with high-contrast accessibility design.">
 
-  <!-- Inter & Playfair Display Google Fonts -->
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Ambient Glowing Background Blobs -->
+  <!-- Soft Ambient Background Glow Blobs -->
   <div class="ambient-background" aria-hidden="true">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
@@ -26,7 +26,7 @@
       <div class="brand">
         <div class="brand-icon" id="brand-icon">
           <!-- Sparkles Icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m12 3-1.9 5.8a2 2 0 0 1-1.28 1.28L3 12l5.8 1.9a2 2 0 0 1 1.28 1.28L12 21l1.9-5.8a2 2 0 0 1 1.28-1.28L21 12l-5.8-1.9a2 2 0 0 1-1.28-1.28Z"/>
             <path d="M5 3v4"/>
             <path d="M19 17v4"/>
@@ -36,35 +36,18 @@
         </div>
         <div class="brand-text">
           <h1>QuoteVerse</h1>
-          <p>Daily Wisdom & Inspiration</p>
+          <p>Daily Inspiration & Wisdom</p>
         </div>
       </div>
 
       <div class="header-actions">
         <!-- Favorites Counter Button -->
-        <button id="favorites-toggle-btn" class="icon-btn" title="View Saved Favorites (F)" aria-label="View Saved Favorites">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button id="favorites-toggle-btn" class="icon-btn" title="View Saved Favorites (F)" aria-label="View Saved Favorites (F)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
           </svg>
+          <span class="btn-label-text">Favorites</span>
           <span class="badge" id="fav-count-badge">0</span>
-        </button>
-
-        <!-- Theme Switcher Button -->
-        <button id="theme-toggle-btn" class="icon-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
-          <svg id="theme-moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-          </svg>
-          <svg id="theme-sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M12 2v2"/>
-            <path d="M12 20v2"/>
-            <path d="m4.93 4.93 1.41 1.41"/>
-            <path d="m17.66 17.66 1.41 1.41"/>
-            <path d="M2 12h2"/>
-            <path d="M20 12h2"/>
-            <path d="m6.34 17.66-1.41 1.41"/>
-            <path d="m19.07 4.93-1.41 1.41"/>
-          </svg>
         </button>
       </div>
     </header>
@@ -97,10 +80,10 @@
       <article class="quote-card" id="quote-card" aria-live="polite">
 
         <!-- Decorative Watermark SVGs -->
-        <svg class="quote-watermark quote-watermark-open" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="quote-watermark quote-watermark-open" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
         </svg>
-        <svg class="quote-watermark quote-watermark-close" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="quote-watermark quote-watermark-close" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
         </svg>
 
@@ -128,29 +111,29 @@
 
             <!-- Copy Quote Button -->
             <button class="action-btn" id="copy-btn" title="Copy Quote (C)" aria-label="Copy Quote to Clipboard">
-              <svg id="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg id="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
                 <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
               </svg>
-              <svg id="check-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <svg id="check-icon" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;" aria-hidden="true">
                 <polyline points="20 6 9 17 4 12"/>
               </svg>
-              <span id="copy-btn-text">Copy</span>
+              <span id="copy-btn-text">Copy Quote</span>
             </button>
 
             <!-- Speech Synthesis / Read Aloud Button -->
             <button class="action-btn" id="speak-btn" title="Read Aloud (S)" aria-label="Listen to Quote">
-              <svg id="speak-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg id="speak-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
                 <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
               </svg>
-              <span>Listen</span>
+              <span id="speak-btn-text">Listen</span>
             </button>
 
             <!-- Favorite Bookmark Button -->
             <button class="action-btn" id="favorite-btn" title="Save Favorite (F)" aria-label="Add to Favorites">
-              <svg id="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg id="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
               </svg>
               <span id="fav-btn-text">Save</span>
@@ -158,7 +141,7 @@
 
             <!-- Share Button -->
             <button class="action-btn" id="share-btn" title="Share Quote" aria-label="Share Quote on Twitter">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
                 <polyline points="16 6 12 2 8 6"/>
                 <line x1="12" y1="2" x2="12" y2="15"/>
@@ -170,7 +153,7 @@
 
           <!-- Primary New Quote Button -->
           <button class="btn-primary" id="new-quote-btn" title="Generate New Quote (Space)">
-            <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
               <path d="M3 3v5h5"/>
               <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
@@ -183,7 +166,7 @@
       </article>
 
       <!-- Keyboard Accessibility Hint -->
-      <div class="keyboard-hint" aria-hidden="true">
+      <div class="keyboard-hint" aria-label="Keyboard Shortcuts">
         <span>Shortcuts: <kbd class="kbd-key">Space</kbd> New Quote</span>
         <span>•</span>
         <span><kbd class="kbd-key">C</kbd> Copy</span>
@@ -198,17 +181,17 @@
   </div>
 
   <!-- Favorites Modal Overlay -->
-  <dialog id="favorites-modal" class="modal-overlay">
+  <dialog id="favorites-modal" class="modal-overlay" aria-labelledby="modal-title">
     <div class="modal-card">
       <div class="modal-header">
-        <h2>
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+        <h2 id="modal-title">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true">
             <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
           </svg>
-          Saved Quotes
+          Saved Favorites
         </h2>
         <button id="close-modal-btn" class="icon-btn" aria-label="Close Favorites Modal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 6 6 18"/>
             <path d="m6 6 12 12"/>
           </svg>
@@ -221,7 +204,7 @@
   </dialog>
 
   <!-- Toast Notification Container -->
-  <div class="toast-container" id="toast-container"></div>
+  <div class="toast-container" id="toast-container" aria-live="assertive"></div>
 
   <!-- Scripts -->
   <script src="quotes.js"></script>
