@@ -50,12 +50,6 @@
             </button>
           </li>
           <li class="nav-item">
-            <button class="nav-link" data-view="categories-view" id="nav-categories-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-              <span>Categories</span>
-            </button>
-          </li>
-          <li class="nav-item">
             <button class="nav-link" data-view="favorites-view" id="nav-favorites-btn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
               <span>Favourites</span>
@@ -87,35 +81,23 @@
       <!-- VIEW 1: HOME / QUOTE GENERATOR -->
       <section class="app-view active" id="home-view" aria-label="Quote Generator Home">
 
-        <!-- Category Selector Horizontal Tabs -->
-        <nav class="category-nav" aria-label="Quote Category Selection">
-          <div class="category-tabs" role="tablist">
-            <button class="tab-btn active" data-category="all" role="tab" aria-selected="true">
-              <span>✨ All</span>
-            </button>
-            <button class="tab-btn" data-category="motivation" role="tab" aria-selected="false">
-              <span>🚀 Motivation</span>
-            </button>
-            <button class="tab-btn" data-category="success" role="tab" aria-selected="false">
-              <span>🏆 Success</span>
-            </button>
-            <button class="tab-btn" data-category="life" role="tab" aria-selected="false">
-              <span>🌱 Life</span>
-            </button>
-            <button class="tab-btn" data-category="love" role="tab" aria-selected="false">
-              <span>❤️ Love</span>
-            </button>
-            <button class="tab-btn" data-category="wisdom" role="tab" aria-selected="false">
-              <span>💡 Wisdom</span>
-            </button>
-            <button class="tab-btn" data-category="happiness" role="tab" aria-selected="false">
-              <span>😊 Happiness</span>
-            </button>
-            <button class="tab-btn" data-category="leadership" role="tab" aria-selected="false">
-              <span>👑 Leadership</span>
-            </button>
+        <!-- Category Dropdown Control Area -->
+        <div class="category-dropdown-area">
+          <label for="category-select" class="category-dropdown-label">Category</label>
+          <div class="select-wrapper">
+            <select id="category-select" class="category-select" aria-label="Select Quote Category">
+              <option value="all">✨ All Categories</option>
+              <option value="motivation">🚀 Motivation</option>
+              <option value="success">🏆 Success</option>
+              <option value="life">🌱 Life</option>
+              <option value="love">❤️ Love</option>
+              <option value="wisdom">💡 Wisdom</option>
+              <option value="happiness">😊 Happiness</option>
+              <option value="leadership">👑 Leadership</option>
+            </select>
+            <svg class="select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </div>
-        </nav>
+        </div>
 
         <!-- Quote Card Component -->
         <article class="quote-card" id="quote-card" aria-live="polite">
@@ -146,9 +128,30 @@
             </cite>
           </div>
 
-          <!-- Quote Control Toolbar -->
+          <!-- Quote Control Toolbar Hierarchy -->
           <div class="quote-controls">
-            <div class="control-group-left">
+            
+            <!-- Primary Action: Full-Width NEW QUOTE Button -->
+            <button class="btn-primary btn-full-width" id="new-quote-btn" title="Generate New Quote (Space)">
+              <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
+                <path d="M16 16h5v5"/>
+              </svg>
+              <span>NEW QUOTE</span>
+            </button>
+
+            <!-- Secondary Action Row -->
+            <div class="secondary-controls-row">
+
+              <!-- Favorite Bookmark Button -->
+              <button class="action-btn fav-action-btn" id="favorite-btn" title="Save Favorite (F)" aria-label="Add to Favourites">
+                <svg id="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+                <span id="fav-btn-text">Add to Favourites</span>
+              </button>
 
               <!-- Copy Quote Button -->
               <button class="action-btn" id="copy-btn" title="Copy Quote (C)" aria-label="Copy Quote to Clipboard">
@@ -172,14 +175,6 @@
                 <span id="speak-btn-text">Listen</span>
               </button>
 
-              <!-- Favorite Bookmark Button -->
-              <button class="action-btn" id="favorite-btn" title="Save Favorite (F)" aria-label="Add to Favourites">
-                <svg id="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
-                </svg>
-                <span id="fav-btn-text">Save</span>
-              </button>
-
               <!-- Share Button -->
               <button class="action-btn" id="share-btn" title="Share Quote" aria-label="Share Quote on Twitter">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -192,16 +187,6 @@
 
             </div>
 
-            <!-- Primary New Quote Button -->
-            <button class="btn-primary" id="new-quote-btn" title="Generate New Quote (Space)">
-              <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
-                <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
-                <path d="M16 16h5v5"/>
-              </svg>
-              <span>New Quote</span>
-            </button>
           </div>
 
         </article>
@@ -219,19 +204,7 @@
 
       </section>
 
-      <!-- VIEW 2: CATEGORIES DISCOVERY -->
-      <section class="app-view" id="categories-view" aria-label="Browse Quote Categories">
-        <div class="view-header">
-          <h2>Browse Categories</h2>
-          <p>Explore timeless quotes organized by topic to match your current state of mind.</p>
-        </div>
-
-        <div class="categories-grid" id="categories-grid">
-          <!-- Rendered dynamically via JS -->
-        </div>
-      </section>
-
-      <!-- VIEW 3: FAVOURITES GALLERY -->
+      <!-- VIEW 2: FAVOURITES GALLERY -->
       <section class="app-view" id="favorites-view" aria-label="My Saved Favourites">
         <div class="view-header flex-header">
           <div>
@@ -246,7 +219,7 @@
         </div>
       </section>
 
-      <!-- VIEW 4: AUTHENTICATION (SIGN IN & SIGN UP) -->
+      <!-- VIEW 3: AUTHENTICATION (SIGN IN & SIGN UP) -->
       <section class="app-view" id="auth-view" aria-label="User Authentication">
         <div class="auth-card">
           <!-- Auth Form Mode Tabs -->
@@ -326,7 +299,7 @@
         </div>
       </section>
 
-      <!-- VIEW 5: USER ACCOUNT PROFILE -->
+      <!-- VIEW 4: USER ACCOUNT PROFILE -->
       <section class="app-view" id="account-view" aria-label="User Account Settings">
         <div class="account-card">
           <div class="account-header">

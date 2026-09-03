@@ -8,14 +8,14 @@
 
   // --- Category Definitions & Accents ---
   const CATEGORIES_CONFIG = {
-    all: { name: 'All', icon: '✨', accent: '#6b21a8', rgb: '107, 33, 168', description: 'Explore quotes across all life perspectives and wisdom.' },
-    motivation: { name: 'Motivation', icon: '🚀', accent: '#7c3aed', rgb: '124, 58, 237', description: 'Ignite your inner drive, energy, and determination.' },
-    success: { name: 'Success', icon: '🏆', accent: '#0d9488', rgb: '13, 148, 136', description: 'Insights on achievement, discipline, and overcoming hurdles.' },
-    life: { name: 'Life', icon: '🌱', accent: '#047857', rgb: '4, 120, 87', description: 'Reflections on living fully, purpose, and growth.' },
-    love: { name: 'Love', icon: '❤️', accent: '#be123c', rgb: '190, 18, 60', description: 'Timeless words on compassion, affection, and human bond.' },
-    wisdom: { name: 'Wisdom', icon: '💡', accent: '#b45309', rgb: '180, 83, 9', description: 'Deep philosophical thoughts and timeless knowledge.' },
-    happiness: { name: 'Happiness', icon: '😊', accent: '#c026d3', rgb: '192, 38, 211', description: 'Discover joy, contentment, and gratitude.' },
-    leadership: { name: 'Leadership', icon: '👑', accent: '#4338ca', rgb: '67, 56, 202', description: 'Visionary guidance on inspiring and guiding others.' }
+    all: { name: 'All Categories', icon: '✨', accent: '#6b21a8', rgb: '107, 33, 168' },
+    motivation: { name: 'Motivation', icon: '🚀', accent: '#7c3aed', rgb: '124, 58, 237' },
+    success: { name: 'Success', icon: '🏆', accent: '#0d9488', rgb: '13, 148, 136' },
+    life: { name: 'Life', icon: '🌱', accent: '#047857', rgb: '4, 120, 87' },
+    love: { name: 'Love', icon: '❤️', accent: '#be123c', rgb: '190, 18, 60' },
+    wisdom: { name: 'Wisdom', icon: '💡', accent: '#b45309', rgb: '180, 83, 9' },
+    happiness: { name: 'Happiness', icon: '😊', accent: '#c026d3', rgb: '192, 38, 211' },
+    leadership: { name: 'Leadership', icon: '👑', accent: '#4338ca', rgb: '67, 56, 202' }
   };
 
   // --- App State ---
@@ -111,7 +111,6 @@
       users[cleanEmail] = newUser;
       this.saveUsers(users);
 
-      // Auto login
       this.setSession(cleanEmail);
       return newUser;
     },
@@ -201,12 +200,8 @@
   };
 
   // --- DOM Element References ---
-  const navHomeBtn = document.getElementById('nav-home-btn');
-  const navCategoriesBtn = document.getElementById('nav-categories-btn');
-  const navFavoritesBtn = document.getElementById('nav-favorites-btn');
   const navAuthBtn = document.getElementById('nav-auth-btn');
   const navAuthText = document.getElementById('nav-auth-text');
-  const navAuthIcon = document.getElementById('nav-auth-icon');
   const favCountBadge = document.getElementById('fav-count-badge');
   const brandLogo = document.getElementById('brand-logo');
 
@@ -215,13 +210,9 @@
 
   // Views
   const views = document.querySelectorAll('.app-view');
-  const homeView = document.getElementById('home-view');
-  const categoriesView = document.getElementById('categories-view');
-  const favoritesView = document.getElementById('favorites-view');
-  const authView = document.getElementById('auth-view');
-  const accountView = document.getElementById('account-view');
 
-  // Quote Card Elements
+  // Quote Card & Controls Elements
+  const categorySelect = document.getElementById('category-select');
   const quoteText = document.getElementById('quote-text');
   const quoteAuthor = document.getElementById('quote-author');
   const quoteCategoryTag = document.getElementById('quote-category-tag');
@@ -236,10 +227,6 @@
   const favoriteBtn = document.getElementById('favorite-btn');
   const favBtnText = document.getElementById('fav-btn-text');
   const shareBtn = document.getElementById('share-btn');
-  const categoryTabBtns = document.querySelectorAll('.category-tabs .tab-btn');
-
-  // Categories Grid Element
-  const categoriesGrid = document.getElementById('categories-grid');
 
   // Favourites Gallery Elements
   const favoritesGalleryContainer = document.getElementById('favorites-gallery-container');
@@ -279,7 +266,6 @@
   // --- Initialization ---
   function init() {
     setupEventListeners();
-    renderCategoriesGrid();
     updateAuthUIState();
     generateNewQuote(false);
   }
@@ -328,8 +314,6 @@
       renderFavoritesGallery();
     } else if (targetViewId === 'account-view') {
       renderAccountPage();
-    } else if (targetViewId === 'categories-view') {
-      renderCategoriesGrid();
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -411,57 +395,16 @@
     updateFavoriteButtonState();
   }
 
-  // --- Category Management & Grid ---
-  function selectCategory(categoryKey) {
-    currentCategory = categoryKey.toLowerCase();
-
-    categoryTabBtns.forEach(btn => {
-      const cat = btn.getAttribute('data-category');
-      if (cat.toLowerCase() === currentCategory) {
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-      } else {
-        btn.classList.remove('active');
-        btn.setAttribute('aria-selected', 'false');
-      }
-    });
+  // --- Category Management ---
+  function handleCategoryChange(e) {
+    const selectedCat = e.target.value;
+    currentCategory = selectedCat.toLowerCase();
 
     if (activeView !== 'home-view') {
       switchView('home-view');
     }
 
     generateNewQuote(true);
-  }
-
-  function renderCategoriesGrid() {
-    const data = window.QUOTES_DATA || [];
-    categoriesGrid.innerHTML = Object.keys(CATEGORIES_CONFIG).map(catKey => {
-      const cfg = CATEGORIES_CONFIG[catKey];
-      const count = catKey === 'all' ? data.length : data.filter(q => q.category.toLowerCase() === catKey).length;
-      return `
-        <div class="category-card" data-category="${catKey}">
-          <div class="category-card-top">
-            <span class="category-card-icon">${cfg.icon}</span>
-            <span class="category-card-count">${count} quotes</span>
-          </div>
-          <div class="category-card-body">
-            <h3>${cfg.name}</h3>
-            <p>${cfg.description}</p>
-          </div>
-          <div class="category-card-footer">
-            <span>Explore Quotes</span>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    categoriesGrid.querySelectorAll('.category-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        const cat = e.currentTarget.getAttribute('data-category');
-        selectCategory(cat);
-      });
-    });
   }
 
   // --- Favourites Management ---
@@ -494,10 +437,10 @@
 
     if (isFav) {
       favoriteBtn.classList.add('is-favorite');
-      favBtnText.textContent = 'Saved';
+      favBtnText.textContent = 'Saved to Favourites';
     } else {
       favoriteBtn.classList.remove('is-favorite');
-      favBtnText.textContent = 'Save';
+      favBtnText.textContent = 'Add to Favourites';
     }
   }
 
@@ -860,15 +803,10 @@
       mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
-    // Home Category Tabs
-    categoryTabBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const cat = e.currentTarget.getAttribute('data-category');
-        selectCategory(cat);
-      });
-    });
+    // Category Select Dropdown
+    categorySelect.addEventListener('change', handleCategoryChange);
 
-    // Quote Toolbar Buttons
+    // Quote Controls
     newQuoteBtn.addEventListener('click', () => generateNewQuote(true));
     copyBtn.addEventListener('click', copyQuoteToClipboard);
     speakBtn.addEventListener('click', toggleSpeech);
@@ -912,7 +850,7 @@
 
     // Global Keyboard Hotkeys
     document.addEventListener('keydown', (e) => {
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || authPromptModal.open || forgotPasswordModal.open) {
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT' || authPromptModal.open || forgotPasswordModal.open) {
         return;
       }
 
