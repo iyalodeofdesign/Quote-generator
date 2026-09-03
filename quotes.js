@@ -1,4 +1,128 @@
 const QUOTES_DATA = [
+  // --- MOTIVATION ---
+  {
+    id: "motivation-1",
+    category: "motivation",
+    text: "The secret of getting ahead is getting started.",
+    author: "Mark Twain"
+  },
+  {
+    id: "motivation-2",
+    category: "motivation",
+    text: "It always seems impossible until it's done.",
+    author: "Nelson Mandela"
+  },
+  {
+    id: "motivation-3",
+    category: "motivation",
+    text: "Don't watch the clock; do what it does. Keep going.",
+    author: "Sam Levenson"
+  },
+  {
+    id: "motivation-4",
+    category: "motivation",
+    text: "Start where you are. Use what you have. Do what you can.",
+    author: "Arthur Ashe"
+  },
+  {
+    id: "motivation-5",
+    category: "motivation",
+    text: "Aim for the moon. If you miss, you may hit a star.",
+    author: "W. Clement Stone"
+  },
+  {
+    id: "motivation-6",
+    category: "motivation",
+    text: "Keep your face always toward the sunshine—and shadows will fall behind you.",
+    author: "Walt Whitman"
+  },
+  {
+    id: "motivation-7",
+    category: "motivation",
+    text: "You are never too old to set another goal or to dream a new dream.",
+    author: "C.S. Lewis"
+  },
+  {
+    id: "motivation-8",
+    category: "motivation",
+    text: "Action is the foundational key to all success.",
+    author: "Pablo Picasso"
+  },
+  {
+    id: "motivation-9",
+    category: "motivation",
+    text: "Believe you can and you're halfway there.",
+    author: "Theodore Roosevelt"
+  },
+  {
+    id: "motivation-10",
+    category: "motivation",
+    text: "The hard days are what make you stronger.",
+    author: "Aly Raisman"
+  },
+
+  // --- SUCCESS ---
+  {
+    id: "success-1",
+    category: "success",
+    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+    author: "Winston Churchill"
+  },
+  {
+    id: "success-2",
+    category: "success",
+    text: "Success usually comes to those who are too busy to be looking for it.",
+    author: "Henry David Thoreau"
+  },
+  {
+    id: "success-3",
+    category: "success",
+    text: "The way to get started is to quit talking and begin doing.",
+    author: "Walt Disney"
+  },
+  {
+    id: "success-4",
+    category: "success",
+    text: "Don't be afraid to give up the good to go for the great.",
+    author: "John D. Rockefeller"
+  },
+  {
+    id: "success-5",
+    category: "success",
+    text: "Opportunities don't happen. You create them.",
+    author: "Chris Grosser"
+  },
+  {
+    id: "success-6",
+    category: "success",
+    text: "Try not to become a man of success. Rather become a man of value.",
+    author: "Albert Einstein"
+  },
+  {
+    id: "success-7",
+    category: "success",
+    text: "Success is walking from failure to failure with no loss of enthusiasm.",
+    author: "Winston Churchill"
+  },
+  {
+    id: "success-8",
+    category: "success",
+    text: "I owe my success to having listened respectfully to the very best advice, and then going away and doing the exact opposite.",
+    author: "G.K. Chesterton"
+  },
+  {
+    id: "success-9",
+    category: "success",
+    text: "There are no secrets to success. It is the result of preparation, hard work, and learning from failure.",
+    author: "Colin Powell"
+  },
+  {
+    id: "success-10",
+    category: "success",
+    text: "Success is getting what you want, happiness is wanting what you get.",
+    author: "W. P. Kinsella"
+  },
+
   // --- LIFE ---
   {
     id: "life-1",
@@ -164,26 +288,194 @@ const QUOTES_DATA = [
     text: "Love recognizes no barriers. It jumps hurdles, leaps fences, penetrates walls to arrive at its destination full of hope.",
     author: "Maya Angelou"
   },
+
+  // --- WISDOM ---
   {
-    id: "love-13",
-    category: "love",
-    text: "Keep love in your heart. A life without it is like a sunless garden when the flowers are dead.",
-    author: "Oscar Wilde"
+    id: "wisdom-1",
+    category: "wisdom",
+    text: "The only true wisdom is in knowing you know nothing.",
+    author: "Socrates"
   },
   {
-    id: "love-14",
-    category: "love",
-    text: "The giving of love is an education in itself.",
-    author: "Eleanor Roosevelt"
+    id: "wisdom-2",
+    category: "wisdom",
+    text: "Knowing others is intelligence; knowing yourself is true wisdom.",
+    author: "Lao Tzu"
   },
   {
-    id: "love-15",
-    category: "love",
-    text: "Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that.",
-    author: "Martin Luther King Jr."
+    id: "wisdom-3",
+    category: "wisdom",
+    text: "Count your age by friends, not years. Count your life by smiles, not tears.",
+    author: "John Lennon"
+  },
+  {
+    id: "wisdom-4",
+    category: "wisdom",
+    text: "The fool doth think he is wise, but the wise man knows himself to be a fool.",
+    author: "William Shakespeare"
+  },
+  {
+    id: "wisdom-5",
+    category: "wisdom",
+    text: "It is the mark of an educated mind to be able to entertain a thought without accepting it.",
+    author: "Aristotle"
+  },
+  {
+    id: "wisdom-6",
+    category: "wisdom",
+    text: "Any fool can know. The point is to understand.",
+    author: "Albert Einstein"
+  },
+  {
+    id: "wisdom-7",
+    category: "wisdom",
+    text: "Wisdom begins in wonder.",
+    author: "Socrates"
+  },
+  {
+    id: "wisdom-8",
+    category: "wisdom",
+    text: "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.",
+    author: "Rumi"
+  },
+  {
+    id: "wisdom-9",
+    category: "wisdom",
+    text: "Wisdom comes from experience. Experience is often the result of lack of wisdom.",
+    author: "Terry Pratchett"
+  },
+  {
+    id: "wisdom-10",
+    category: "wisdom",
+    text: "Knowledge speaks, but wisdom listens.",
+    author: "Jimi Hendrix"
   },
 
-  // --- COURAGE ---
+  // --- HAPPINESS ---
+  {
+    id: "happiness-1",
+    category: "happiness",
+    text: "Happiness is not something ready made. It comes from your own actions.",
+    author: "Dalai Lama"
+  },
+  {
+    id: "happiness-2",
+    category: "happiness",
+    text: "For every minute you are angry you lose sixty seconds of happiness.",
+    author: "Ralph Waldo Emerson"
+  },
+  {
+    id: "happiness-3",
+    category: "happiness",
+    text: "Happiness is when what you think, what you say, and what you do are in harmony.",
+    author: "Mahatma Gandhi"
+  },
+  {
+    id: "happiness-4",
+    category: "happiness",
+    text: "The most important thing is to enjoy your life—to be happy—it's all that matters.",
+    author: "Audrey Hepburn"
+  },
+  {
+    id: "happiness-5",
+    category: "happiness",
+    text: "Sanity and happiness are an impossible combination.",
+    author: "Mark Twain"
+  },
+  {
+    id: "happiness-6",
+    category: "happiness",
+    text: "Happiness depends upon ourselves.",
+    author: "Aristotle"
+  },
+  {
+    id: "happiness-7",
+    category: "happiness",
+    text: "The only way to find true happiness is to risk being completely open.",
+    author: "Chuck Palahniuk"
+  },
+  {
+    id: "happiness-8",
+    category: "happiness",
+    text: "Spread love everywhere you go. Let no one ever come to you without leaving happier.",
+    author: "Mother Teresa"
+  },
+  {
+    id: "happiness-9",
+    category: "happiness",
+    text: "Happiness is a warm puppy.",
+    author: "Charles M. Schulz"
+  },
+  {
+    id: "happiness-10",
+    category: "happiness",
+    text: "There is no path to happiness: happiness is the path.",
+    author: "Thich Nhat Hanh"
+  },
+
+  // --- LEADERSHIP ---
+  {
+    id: "leadership-1",
+    category: "leadership",
+    text: "A leader is one who knows the way, goes the way, and shows the way.",
+    author: "John C. Maxwell"
+  },
+  {
+    id: "leadership-2",
+    category: "leadership",
+    text: "Leadership is not about a title or a designation. It's about impact, influence, and inspiration.",
+    author: "Robin S. Sharma"
+  },
+  {
+    id: "leadership-3",
+    category: "leadership",
+    text: "Innovation distinguishes between a leader and a follower.",
+    author: "Steve Jobs"
+  },
+  {
+    id: "leadership-4",
+    category: "leadership",
+    text: "The supreme quality for leadership is unquestionably integrity.",
+    author: "Dwight D. Eisenhower"
+  },
+  {
+    id: "leadership-5",
+    category: "leadership",
+    text: "Do not follow where the path may lead, go instead where there is no path and leave a trail.",
+    author: "Ralph Waldo Emerson"
+  },
+  {
+    id: "leadership-6",
+    category: "leadership",
+    text: "Great leaders are almost always great simplifiers, who can cut through argument, debate and doubt to offer a solution everyone can understand.",
+    author: "Colin Powell"
+  },
+  {
+    id: "leadership-7",
+    category: "leadership",
+    text: "To lead people, walk behind them.",
+    author: "Lao Tzu"
+  },
+  {
+    id: "leadership-8",
+    category: "leadership",
+    text: "Before you are a leader, success is all about growing yourself. When you become a leader, success is all about growing others.",
+    author: "Jack Welch"
+  },
+  {
+    id: "leadership-9",
+    category: "leadership",
+    text: "A genuine leader is not a searcher for consensus but a molder of consensus.",
+    author: "Martin Luther King Jr."
+  },
+  {
+    id: "leadership-10",
+    category: "leadership",
+    text: "Leadership is the capacity to translate vision into reality.",
+    author: "Warren Bennis"
+  },
+
+  // --- COURAGE & STRENGTH (Preserved) ---
   {
     id: "courage-1",
     category: "courage",
@@ -193,89 +485,9 @@ const QUOTES_DATA = [
   {
     id: "courage-2",
     category: "courage",
-    text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-    author: "Winston Churchill"
-  },
-  {
-    id: "courage-3",
-    category: "courage",
     text: "It takes courage to grow up and become who you really are.",
     author: "E.E. Cummings"
   },
-  {
-    id: "courage-4",
-    category: "courage",
-    text: "All our dreams can come true, if we have the courage to pursue them.",
-    author: "Walt Disney"
-  },
-  {
-    id: "courage-5",
-    category: "courage",
-    text: "You gain strength, courage and confidence by every experience in which you really stop to look fear in the face.",
-    author: "Eleanor Roosevelt"
-  },
-  {
-    id: "courage-6",
-    category: "courage",
-    text: "He who is not courageous enough to take risks will accomplish nothing in life.",
-    author: "Muhammad Ali"
-  },
-  {
-    id: "courage-7",
-    category: "courage",
-    text: "Courage is resistance to fear, mastery of fear - not absence of fear.",
-    author: "Mark Twain"
-  },
-  {
-    id: "courage-8",
-    category: "courage",
-    text: "With enough courage, you can do without a reputation.",
-    author: "Margaret Mitchell"
-  },
-  {
-    id: "courage-9",
-    category: "courage",
-    text: "Courage is grace under pressure.",
-    author: "Ernest Hemingway"
-  },
-  {
-    id: "courage-10",
-    category: "courage",
-    text: "Whatever you do, you need courage. Whatever course you decide upon, there is always someone to tell you that you are wrong.",
-    author: "Ralph Waldo Emerson"
-  },
-  {
-    id: "courage-11",
-    category: "courage",
-    text: "Have the courage to use your own reason!",
-    author: "Immanuel Kant"
-  },
-  {
-    id: "courage-12",
-    category: "courage",
-    text: "Courage doesn't always roar. Sometimes courage is the quiet voice at the end of the day saying, 'I will try again tomorrow.'",
-    author: "Mary Anne Radmacher"
-  },
-  {
-    id: "courage-13",
-    category: "courage",
-    text: "Real courage is when you know you're licked before you begin, but you begin anyway and see it through no matter what.",
-    author: "Harper Lee"
-  },
-  {
-    id: "courage-14",
-    category: "courage",
-    text: "Confront the dark parts of yourself, and work to banish them with illumination and forgiveness. Your willingness to wrestle with your demons will cause your angels to sing.",
-    author: "August Wilson"
-  },
-  {
-    id: "courage-15",
-    category: "courage",
-    text: "Courage is the most important of all the virtues because without courage, you can't practice any other virtue consistently.",
-    author: "Maya Angelou"
-  },
-
-  // --- STRENGTH ---
   {
     id: "strength-1",
     category: "strength",
@@ -287,84 +499,6 @@ const QUOTES_DATA = [
     category: "strength",
     text: "Strength does not come from physical capacity. It comes from an indomitable will.",
     author: "Mahatma Gandhi"
-  },
-  {
-    id: "strength-3",
-    category: "strength",
-    text: "You never know how strong you are until being strong is your only choice.",
-    author: "Bob Marley"
-  },
-  {
-    id: "strength-4",
-    category: "strength",
-    text: "Out of suffering have emerged the strongest souls; the most massive characters are seared with scars.",
-    author: "Kahlil Gibran"
-  },
-  {
-    id: "strength-5",
-    category: "strength",
-    text: "The world breaks everyone, and afterward, some are strong at the broken places.",
-    author: "Ernest Hemingway"
-  },
-  {
-    id: "strength-6",
-    category: "strength",
-    text: "He who believes is strong; he who doubts is weak. Strong convictions precede great actions.",
-    author: "Louisa May Alcott"
-  },
-  {
-    id: "strength-7",
-    category: "strength",
-    text: "Mastering others is strength. Mastering yourself is true power.",
-    author: "Lao Tzu"
-  },
-  {
-    id: "strength-8",
-    category: "strength",
-    text: "Calm mind brings inner strength and self-confidence, so that's very important for good health.",
-    author: "Dalai Lama"
-  },
-  {
-    id: "strength-9",
-    category: "strength",
-    text: "Promise me you'll always remember: You're braver than you believe, and stronger than you seem, and smarter than you think.",
-    author: "A.A. Milne"
-  },
-  {
-    id: "strength-10",
-    category: "strength",
-    text: "Where there is no struggle, there is no strength.",
-    author: "Frederick Douglass"
-  },
-  {
-    id: "strength-11",
-    category: "strength",
-    text: "A truly strong person does not need the approval of others any more than a lion needs the approval of sheep.",
-    author: "Vernon Howard"
-  },
-  {
-    id: "strength-12",
-    category: "strength",
-    text: "Tough times never last, but tough people do.",
-    author: "Robert H. Schuller"
-  },
-  {
-    id: "strength-13",
-    category: "strength",
-    text: "Deep in your roots, all flowers keep the light.",
-    author: "Theodore Roethke"
-  },
-  {
-    id: "strength-14",
-    category: "strength",
-    text: "In the depth of winter, I finally learned that within me there lay an invincible summer.",
-    author: "Albert Camus"
-  },
-  {
-    id: "strength-15",
-    category: "strength",
-    text: "Strength and growth come only through continuous effort and struggle.",
-    author: "Napoleon Hill"
   }
 ];
 
@@ -374,4 +508,3 @@ if (typeof window !== 'undefined') {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = QUOTES_DATA;
 }
-
