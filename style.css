@@ -561,41 +561,48 @@ body {
   flex-direction: column;
   gap: 16px;
   z-index: 2;
-  padding-top: 24px;
+  padding-top: 20px;
   border-top: 2px solid var(--nav-border);
   width: 100%;
 }
 
-/* Primary CTA: Full Width "NEW QUOTE" Button */
-.btn-primary.btn-full-width {
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
   width: 100%;
+}
+
+/* Primary CTA: "New Quote" Button (Matches exact size & dimensions of Share/Action buttons) */
+.btn-primary {
   background: var(--purple-primary);
   color: #ffffff;
   border: 2px solid var(--purple-primary);
   font-family: var(--font-ui);
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  min-height: 54px;
-  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  min-height: 48px;
+  padding: 10px 18px;
   border-radius: var(--radius-md);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(107, 33, 168, 0.35);
+  box-shadow: 0 4px 14px rgba(107, 33, 168, 0.3);
   transition: all var(--transition-fast);
+  flex: 1;
 }
 
-.btn-primary.btn-full-width:hover {
+.btn-primary:hover {
   background: var(--purple-hover);
   border-color: var(--purple-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 26px rgba(107, 33, 168, 0.45);
+  box-shadow: 0 6px 18px rgba(107, 33, 168, 0.4);
 }
 
-.btn-primary.btn-full-width:active {
+.btn-primary:active {
   background: var(--purple-active);
   transform: translateY(0);
 }
@@ -607,15 +614,6 @@ body {
 @keyframes spinIcon {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-/* Secondary Actions Row */
-.secondary-controls-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  width: 100%;
 }
 
 .action-btn {
@@ -1224,14 +1222,15 @@ body {
     gap: 20px;
   }
 
-  .secondary-controls-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .controls-row {
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
   }
 
-  .action-btn.fav-action-btn {
-    grid-column: span 2;
+  .btn-primary, .action-btn {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 120px;
   }
 
   .keyboard-hint {
