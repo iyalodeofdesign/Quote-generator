@@ -158,20 +158,36 @@ body {
   width: 100%;
   max-width: 920px;
   margin: 0 auto;
-  padding: 24px 24px 44px;
+  padding: 28px 24px 44px;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  flex: 1;
 }
 
-/* --- Header & Primary Navigation --- */
+/* --- Header & Primary Navigation (Full-Width Viewport Header) --- */
 .app-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--nav-border);
+  box-shadow: 0 4px 20px -2px rgba(107, 33, 168, 0.06);
+  transition: all var(--transition-fast);
+}
+
+.header-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 24px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid var(--nav-border);
+  gap: 20px;
 }
 
 .brand {
@@ -180,16 +196,18 @@ body {
   gap: 14px;
   cursor: pointer;
   user-select: none;
-  transition: opacity var(--transition-fast);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  border-radius: var(--radius-sm);
 }
 
 .brand:hover {
-  opacity: 0.9;
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
 .brand-icon {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-md);
   background: var(--purple-primary);
   display: flex;
@@ -197,15 +215,16 @@ body {
   justify-content: center;
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(107, 33, 168, 0.3);
+  flex-shrink: 0;
 }
 
 .brand-icon svg {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
 }
 
 .brand-text h1 {
-  font-size: 1.45rem;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -213,7 +232,7 @@ body {
 }
 
 .brand-text p {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-secondary);
 }
@@ -222,12 +241,13 @@ body {
 .main-nav {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .nav-list {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   list-style: none;
 }
 
@@ -238,6 +258,7 @@ body {
   font-family: var(--font-ui);
   font-size: 0.95rem;
   font-weight: 700;
+  min-height: 44px;
   padding: 10px 18px;
   border-radius: var(--radius-pill);
   cursor: pointer;
@@ -251,6 +272,7 @@ body {
 .nav-link svg {
   width: 18px;
   height: 18px;
+  flex-shrink: 0;
 }
 
 .nav-link:hover {
@@ -300,6 +322,12 @@ body {
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.mobile-menu-btn:hover {
+  background: var(--purple-light);
+  border-color: var(--purple-primary);
 }
 
 .mobile-menu-btn svg {
@@ -1173,9 +1201,33 @@ body {
 }
 
 /* --- Responsive Breakpoints --- */
+
+/* Medium Desktops & Laptops (992px to 1279px) */
+@media (max-width: 1279px) {
+  .header-inner {
+    padding: 14px 24px;
+  }
+}
+
+/* Tablets (768px to 991px) */
+@media (max-width: 991px) {
+  .header-inner {
+    padding: 12px 20px;
+  }
+  .nav-link {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Devices & Small Tablets (<768px) */
 @media (max-width: 768px) {
+  .header-inner {
+    padding: 10px 16px;
+  }
+
   .app-container {
-    padding: 16px 16px 32px;
+    padding: 20px 16px 36px;
   }
 
   .mobile-menu-btn {
@@ -1185,17 +1237,19 @@ body {
   .nav-list {
     display: none;
     position: absolute;
-    top: 76px;
-    left: 16px;
-    right: 16px;
+    top: calc(100% + 10px);
+    right: 0;
+    width: min(320px, calc(100vw - 32px));
     background: #ffffff;
-    border: 2.5px solid var(--purple-primary);
-    border-radius: var(--radius-lg);
-    padding: 16px;
+    border: 2px solid var(--purple-primary);
+    border-radius: var(--radius-md);
+    padding: 10px;
     flex-direction: column;
+    gap: 4px;
     align-items: stretch;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    z-index: 100;
+    box-shadow: 0 16px 36px rgba(107, 33, 168, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 1001;
+    animation: menuSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .nav-list.mobile-open {
@@ -1205,7 +1259,9 @@ body {
   .nav-link {
     width: 100%;
     justify-content: flex-start;
-    padding: 12px 18px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    border-radius: var(--radius-sm);
   }
 
   .category-dropdown-area {
@@ -1235,5 +1291,60 @@ body {
 
   .keyboard-hint {
     display: none;
+  }
+}
+
+/* Small Mobile Phones (<380px) */
+@media (max-width: 380px) {
+  .header-inner {
+    padding: 10px 12px;
+  }
+
+  .brand {
+    gap: 10px;
+  }
+
+  .brand-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .brand-text h1 {
+    font-size: 1.2rem;
+  }
+
+  .brand-text p {
+    font-size: 0.75rem;
+  }
+
+  .mobile-menu-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mobile-menu-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-list {
+    width: calc(100vw - 24px);
+    right: -4px;
+  }
+}
+
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

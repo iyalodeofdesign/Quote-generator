@@ -797,10 +797,28 @@
       }
     });
 
-    // Mobile drawer toggle
-    mobileMenuBtn.addEventListener('click', () => {
+    // Mobile drawer toggle & accessibility
+    function closeMobileMenu() {
+      navList.classList.remove('mobile-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const isOpen = navList.classList.toggle('mobile-open');
       mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (navList.classList.contains('mobile-open') && !navList.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navList.classList.contains('mobile-open')) {
+        closeMobileMenu();
+      }
     });
 
     // Category Select Dropdown
