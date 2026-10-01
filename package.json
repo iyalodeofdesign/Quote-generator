@@ -1,0 +1,28 @@
+{
+  "name": "quote-generator",
+  "version": "1.0.0",
+  "description": "Quote Generator is a simple web application that allows users to generate a new quote by clicking a button, making it easy to discover different messages for love, courage, life, and strength.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iyalodeofdesign/Quote-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iyalodeofdesign/Quote-generator/issues"
+  },
+  "homepage": "https://github.com/iyalodeofdesign/Quote-generator#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "stripe": "^23.0.0"
+  }
+}

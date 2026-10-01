@@ -263,15 +263,230 @@
   const forgotPasswordForm = document.getElementById('forgot-password-form');
   const toastContainer = document.getElementById('toast-container');
 
+  // --- Pricing Modal & Fixed Banner Manager ---
+  let isBannerVisible = false;
+
+  function initPricingSystem() {
+    const pricingModal = document.getElementById('pricing-modal');
+    const closePricingModalBtn = document.getElementById('close-pricing-modal-btn');
+    const cancelPricingModalBtn = document.getElementById('cancel-pricing-modal-btn');
+    const upgradePremiumBtn = document.getElementById('upgrade-premium-btn');
+
+    const premiumTopBanner = document.getElementById('premium-top-banner');
+    const bannerViewPlansBtn = document.getElementById('banner-view-plans-btn');
+    const closeBannerBtn = document.getElementById('close-banner-btn');
+
+    // 10-Second Timer (Only ONCE PER SESSION)
+    const modalAlreadyShown = sessionStorage.getItem('quoteverse_pricing_modal_shown');
+    if (!modalAlreadyShown) {
+      setTimeout(() => {
+        openPricingModal();
+        sessionStorage.setItem('quoteverse_pricing_modal_shown', 'true');
+      }, 10000);
+    }
+
+    // Dismissing Modal opens Fixed Top Banner ABOVE Navigation
+    function handlePricingModalDismiss() {
+      closePricingModal();
+      showTopBanner();
+    }
+
+    if (closePricingModalBtn) {
+      closePricingModalBtn.addEventListener('click', handlePricingModalDismiss);
+    }
+    if (cancelPricingModalBtn) {
+      cancelPricingModalBtn.addEventListener('click', handlePricingModalDismiss);
+    }
+
+    if (pricingModal) {
+      // Native Escape key handling on HTML5 <dialog>
+      pricingModal.addEventListener('cancel', (e) => {
+        e.preventDefault();
+        handlePricingModalDismiss();
+      });
+
+      // Backdrop click detection
+      pricingModal.addEventListener('click', (e) => {
+        const rect = pricingModal.getBoundingClientRect();
+        const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+          handlePricingModalDismiss();
+        }
+      });
+    }
+
+    // Upgrade CTA click: Call backend API route to generate Stripe Checkout Session
+    if (upgradePremiumBtn) {
+      upgradePremiumBtn.addEventListener('click', async () => {
+        const originalText = upgradePremiumBtn.textContent;
+        upgradePremiumBtn.disabled = true;
+        upgradePremiumBtn.textContent = 'Redirecting to Stripe...';
+
+        try {
+          const response = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Failed to initialize payment.');
+          }
+
+          if (data.url) {
+            // Redirect user to secure Stripe-hosted checkout URL
+            window.location.href = data.url;
+          } else {
+            throw new Error('No Checkout URL returned by server.');
+          }
+        } catch (err) {
+          console.error('Stripe Checkout Session error:', err);
+          showToast(`Notice: ${err.message}`, '⚠️');
+          upgradePremiumBtn.disabled = false;
+          upgradePremiumBtn.textContent = originalText;
+        }
+      });
+    }
+
+    // Banner Actions
+    if (bannerViewPlansBtn) {
+      bannerViewPlansBtn.addEventListener('click', () => {
+        openPricingModal();
+      });
+    }
+
+    if (closeBannerBtn) {
+      closeBannerBtn.addEventListener('click', () => {
+        hideTopBanner();
+      });
+    }
+
+    window.addEventListener('resize', updateHeaderBannerOffset);
+  }
+
+  // --- Centralized Modal Management (Only 1 Modal Active at a Time) ---
+  function closeAllModals() {
+    const modals = document.querySelectorAll('dialog');
+    modals.forEach(m => {
+      if (m) {
+        if (typeof m.close === 'function' && m.open) {
+          try {
+            m.close();
+          } catch (e) {}
+        }
+        m.removeAttribute('open');
+      }
+    });
+  }
+
+  function openPricingModal() {
+    closeAllModals();
+    const pricingModal = document.getElementById('pricing-modal');
+    if (pricingModal && typeof pricingModal.showModal === 'function') {
+      try {
+        pricingModal.showModal();
+      } catch (e) {
+        pricingModal.setAttribute('open', 'true');
+      }
+    }
+  }
+
+  function closePricingModal() {
+    const pricingModal = document.getElementById('pricing-modal');
+    if (pricingModal && pricingModal.open) {
+      pricingModal.close();
+    }
+  }
+
+  function openAuthPromptModal(description) {
+    closeAllModals();
+    if (description) {
+      const descEl = authPromptModal.querySelector('.prompt-description');
+      if (descEl) descEl.textContent = description;
+    }
+    if (authPromptModal && typeof authPromptModal.showModal === 'function') {
+      try {
+        authPromptModal.showModal();
+      } catch (e) {
+        authPromptModal.setAttribute('open', 'true');
+      }
+    }
+  }
+
+  function openForgotPasswordModal() {
+    closeAllModals();
+    if (forgotPasswordModal && typeof forgotPasswordModal.showModal === 'function') {
+      try {
+        forgotPasswordModal.showModal();
+      } catch (e) {
+        forgotPasswordModal.setAttribute('open', 'true');
+      }
+    }
+  }
+
+  function showTopBanner() {
+    const banner = document.getElementById('premium-top-banner');
+    if (banner) {
+      banner.style.display = 'block';
+      isBannerVisible = true;
+      updateHeaderBannerOffset();
+    }
+  }
+
+  function hideTopBanner() {
+    const banner = document.getElementById('premium-top-banner');
+    if (banner) {
+      banner.style.display = 'none';
+      isBannerVisible = false;
+      updateHeaderBannerOffset();
+    }
+  }
+
+  function updateHeaderBannerOffset() {
+    const banner = document.getElementById('premium-top-banner');
+    const header = document.getElementById('app-header');
+    
+    if (isBannerVisible && banner) {
+      const bannerHeight = banner.offsetHeight || 42;
+      document.documentElement.style.setProperty('--banner-height', bannerHeight + 'px');
+      if (header) header.style.top = bannerHeight + 'px';
+      document.body.style.paddingTop = `calc(${bannerHeight}px + var(--header-height, 72px))`;
+    } else {
+      document.documentElement.style.setProperty('--banner-height', '0px');
+      if (header) header.style.top = '0px';
+      document.body.style.paddingTop = 'var(--header-height, 72px)';
+    }
+  }
+
+  function checkPaymentQueryParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const payment = urlParams.get('payment');
+
+    if (payment === 'success') {
+      showToast('🎉 Payment successful! Premium subscription active.', '⭐');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (payment === 'cancelled') {
+      showToast('Payment cancelled. You can upgrade anytime when ready.', 'ℹ️');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+
   // --- Initialization ---
   function init() {
     setupEventListeners();
+    initPricingSystem();
     updateAuthUIState();
     generateNewQuote(false);
+    checkPaymentQueryParams();
   }
 
   // --- View Navigation & Routing ---
   function switchView(targetViewId) {
+    closeAllModals();
     const currentUser = AuthService.getCurrentUser();
 
     // Protected Route Check for Favourites and Account
@@ -440,7 +655,7 @@
       favBtnText.textContent = 'Saved to Favourites';
     } else {
       favoriteBtn.classList.remove('is-favorite');
-      favBtnText.textContent = 'Add to Favourites';
+      favBtnText.textContent = 'Save';
     }
   }
 
@@ -458,7 +673,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
           <h3>Sign in to view your favourites</h3>
           <p>Create an account to save quotes and access them anytime.</p>
-          <button class="btn-primary" id="gallery-signin-btn">Sign In / Register</button>
+          <button class="btn-lime-primary" id="gallery-signin-btn">Sign In / Register</button>
         </div>
       `;
       document.getElementById('gallery-signin-btn')?.addEventListener('click', () => switchView('auth-view'));
@@ -475,7 +690,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
           <h3>No favourites yet</h3>
           <p>When you find a quote that speaks to you, save it here to build your collection.</p>
-          <button class="btn-primary" id="explore-quotes-btn">Explore Quotes</button>
+          <button class="btn-lime-primary" id="explore-quotes-btn">Explore Quotes</button>
         </div>
       `;
       document.getElementById('explore-quotes-btn')?.addEventListener('click', () => switchView('home-view'));
@@ -542,13 +757,27 @@
   // --- Auth UI Management ---
   function updateAuthUIState() {
     const currentUser = AuthService.getCurrentUser();
+    const loggedOutGroup = document.getElementById('auth-logged-out-group');
+    const loggedInGroup = document.getElementById('auth-logged-in-group');
+    const navUserName = document.getElementById('nav-user-name');
+    const navUserAvatar = document.getElementById('nav-user-avatar');
 
     if (currentUser) {
-      navAuthText.textContent = currentUser.name.split(' ')[0] || 'Account';
-      navAuthBtn.setAttribute('data-view', 'account-view');
+      const firstName = currentUser.name.split(' ')[0] || 'Account';
+      const initial = (currentUser.name[0] || 'U').toUpperCase();
+      if (navAuthText) navAuthText.textContent = firstName;
+      if (navAuthBtn) navAuthBtn.setAttribute('data-view', 'account-view');
+
+      if (navUserName) navUserName.textContent = firstName;
+      if (navUserAvatar) navUserAvatar.textContent = initial;
+      if (loggedOutGroup) loggedOutGroup.style.display = 'none';
+      if (loggedInGroup) loggedInGroup.style.display = 'flex';
     } else {
-      navAuthText.textContent = 'Sign In';
-      navAuthBtn.setAttribute('data-view', 'auth-view');
+      if (navAuthText) navAuthText.textContent = 'Sign In';
+      if (navAuthBtn) navAuthBtn.setAttribute('data-view', 'auth-view');
+
+      if (loggedOutGroup) loggedOutGroup.style.display = 'flex';
+      if (loggedInGroup) loggedInGroup.style.display = 'none';
     }
 
     updateFavoritesBadge();
@@ -673,15 +902,6 @@
     switchView('home-view');
   }
 
-  // --- Modals ---
-  function openAuthPromptModal(description) {
-    if (description) {
-      const descEl = authPromptModal.querySelector('.prompt-description');
-      if (descEl) descEl.textContent = description;
-    }
-    authPromptModal.showModal();
-  }
-
   // --- Utility Actions ---
   function copyQuoteToClipboard() {
     if (!currentQuote) return;
@@ -781,13 +1001,61 @@
 
   // --- Event Listeners Setup ---
   function setupEventListeners() {
-    // Navigation items
-    document.querySelectorAll('.nav-link').forEach(link => {
+    // Navigation links
+    document.querySelectorAll('.nav-link[data-view]').forEach(link => {
       link.addEventListener('click', (e) => {
         const targetView = e.currentTarget.getAttribute('data-view');
         switchView(targetView);
       });
     });
+
+    // Specific nav links
+    const navQuotesBtn = document.getElementById('nav-quotes-btn');
+    if (navQuotesBtn) {
+      navQuotesBtn.addEventListener('click', () => {
+        switchView('home-view');
+        const quoteCard = document.getElementById('quote-card');
+        if (quoteCard) quoteCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    const navCategoriesBtn = document.getElementById('nav-categories-btn');
+    if (navCategoriesBtn) {
+      navCategoriesBtn.addEventListener('click', () => {
+        switchView('home-view');
+        const select = document.getElementById('category-select');
+        if (select) {
+          select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => select.focus(), 300);
+        }
+      });
+    }
+
+    const navSigninBtn = document.getElementById('nav-signin-btn');
+    if (navSigninBtn) {
+      navSigninBtn.addEventListener('click', () => {
+        setAuthTab('signin');
+        switchView('auth-view');
+      });
+    }
+
+    const navSignupBtn = document.getElementById('nav-signup-btn');
+    if (navSignupBtn) {
+      navSignupBtn.addEventListener('click', () => {
+        setAuthTab('signup');
+        switchView('auth-view');
+      });
+    }
+
+    const navAccountBtn = document.getElementById('nav-account-btn');
+    if (navAccountBtn) {
+      navAccountBtn.addEventListener('click', () => switchView('account-view'));
+    }
+
+    const navLogoutBtn = document.getElementById('nav-logout-btn');
+    if (navLogoutBtn) {
+      navLogoutBtn.addEventListener('click', handleSignout);
+    }
 
     brandLogo.addEventListener('click', () => switchView('home-view'));
     brandLogo.addEventListener('keydown', (e) => {
@@ -799,24 +1067,29 @@
 
     // Mobile drawer toggle & accessibility
     function closeMobileMenu() {
+      const mainNav = document.getElementById('main-nav');
+      if (mainNav) mainNav.classList.remove('mobile-open');
       navList.classList.remove('mobile-open');
       mobileMenuBtn.setAttribute('aria-expanded', 'false');
     }
 
     mobileMenuBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = navList.classList.toggle('mobile-open');
+      const mainNav = document.getElementById('main-nav');
+      const isOpen = mainNav ? mainNav.classList.toggle('mobile-open') : navList.classList.toggle('mobile-open');
       mobileMenuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
     document.addEventListener('click', (e) => {
-      if (navList.classList.contains('mobile-open') && !navList.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+      const mainNav = document.getElementById('main-nav');
+      if (mainNav && mainNav.classList.contains('mobile-open') && !mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
         closeMobileMenu();
       }
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navList.classList.contains('mobile-open')) {
+      const mainNav = document.getElementById('main-nav');
+      if (e.key === 'Escape' && mainNav && mainNav.classList.contains('mobile-open')) {
         closeMobileMenu();
       }
     });
@@ -840,7 +1113,7 @@
     signinForm.addEventListener('submit', handleSigninSubmit);
     signupForm.addEventListener('submit', handleSignupSubmit);
 
-    forgotPasswordLink.addEventListener('click', () => forgotPasswordModal.showModal());
+    forgotPasswordLink.addEventListener('click', () => openForgotPasswordModal());
     closeForgotModalBtn.addEventListener('click', () => forgotPasswordModal.close());
     forgotPasswordForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -849,12 +1122,33 @@
       forgotPasswordForm.reset();
     });
 
+    if (forgotPasswordModal) {
+      forgotPasswordModal.addEventListener('click', (e) => {
+        const rect = forgotPasswordModal.getBoundingClientRect();
+        const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+          forgotPasswordModal.close();
+        }
+      });
+    }
+
     // Account Page Actions
     accountViewFavsBtn.addEventListener('click', () => switchView('favorites-view'));
     accountSignoutBtn.addEventListener('click', handleSignout);
 
-    // Auth Prompt Modal Buttons
+    // Auth Prompt Modal Buttons & Backdrop
     closeAuthPromptBtn.addEventListener('click', () => authPromptModal.close());
+    if (authPromptModal) {
+      authPromptModal.addEventListener('click', (e) => {
+        const rect = authPromptModal.getBoundingClientRect();
+        const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+        if (!isInDialog) {
+          authPromptModal.close();
+        }
+      });
+    }
     promptSigninBtn.addEventListener('click', () => {
       authPromptModal.close();
       setAuthTab('signin');
@@ -868,7 +1162,8 @@
 
     // Global Keyboard Hotkeys
     document.addEventListener('keydown', (e) => {
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT' || authPromptModal.open || forgotPasswordModal.open) {
+      const pricingModal = document.getElementById('pricing-modal');
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA' || document.activeElement.tagName === 'SELECT' || authPromptModal.open || forgotPasswordModal.open || (pricingModal && pricingModal.open)) {
         return;
       }
 
@@ -894,3 +1189,4 @@
   document.addEventListener('DOMContentLoaded', init);
 
 })();
+

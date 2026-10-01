@@ -3,74 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuoteVerse - Simple, Polished Quote Discovery & Favourites</title>
+  <title>QuoteVerse - Polished Quote Discovery & Favourites</title>
   <meta name="description" content="Discover inspiring quotes on motivation, success, life, love, wisdom, happiness, and leadership. Save your favorites securely.">
 
-  <!-- Google Fonts & Stylesheet -->
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Soft Ambient Background Glow Blobs -->
-  <div class="ambient-background" aria-hidden="true">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+  <!-- Fixed Top Premium Banner (Initially Hidden, appears after Pricing Modal cancel) -->
+  <div id="premium-top-banner" class="premium-top-banner" role="banner" aria-label="Premium Subscription Banner" style="display: none;">
+    <div class="banner-inner">
+      <div class="banner-content">
+        <span class="banner-sparkle" aria-hidden="true">✨</span>
+        <span class="banner-text">Unlock more with Premium — <strong>just $5/month.</strong></span>
+      </div>
+      <div class="banner-actions">
+        <button id="banner-view-plans-btn" class="banner-cta-btn">View plans &rarr;</button>
+        <button id="close-banner-btn" class="banner-close-btn" aria-label="Dismiss banner">&times;</button>
+      </div>
+    </div>
   </div>
 
   <!-- Primary Navigation Header (Full Width Viewport Wrapper) -->
-  <header class="app-header">
+  <header class="app-header" id="app-header">
     <div class="header-inner">
+      <!-- LEFT: Logo & Brand -->
       <div class="brand" id="brand-logo" role="button" tabindex="0" title="Go to Home" aria-label="QuoteVerse Home">
         <div class="brand-icon">
-          <!-- Sparkles Icon -->
+          <!-- Sparkles / Quote Icon -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m12 3-1.9 5.8a2 2 0 0 1-1.28 1.28L3 12l5.8 1.9a2 2 0 0 1 1.28 1.28L12 21l1.9-5.8a2 2 0 0 1 1.28-1.28L21 12l-5.8-1.9a2 2 0 0 1-1.28-1.28Z"/>
-            <path d="M5 3v4"/>
-            <path d="M19 17v4"/>
-            <path d="M3 5h4"/>
-            <path d="M17 19h4"/>
           </svg>
         </div>
         <div class="brand-text">
           <h1>QuoteVerse</h1>
-          <p>Inspiring Wisdom Daily</p>
         </div>
       </div>
 
-      <!-- Main Navigation Menu -->
-      <nav class="main-nav" aria-label="Main Site Navigation">
+      <!-- MIDDLE & RIGHT NAVIGATION CONTAINER -->
+      <nav class="main-nav" id="main-nav" aria-label="Main Navigation">
+        <!-- MIDDLE: Navigation Links -->
         <ul class="nav-list" id="nav-list">
           <li class="nav-item">
             <button class="nav-link active" data-view="home-view" id="nav-home-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
               <span>Home</span>
             </button>
           </li>
           <li class="nav-item">
             <button class="nav-link" data-view="favorites-view" id="nav-favorites-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-              <span>Favourites</span>
+              <span>Saved Quotes</span>
               <span class="badge" id="fav-count-badge">0</span>
-            </button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link nav-auth-btn" data-view="auth-view" id="nav-auth-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" id="nav-auth-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-              <span id="nav-auth-text">Sign In</span>
             </button>
           </li>
         </ul>
 
-        <!-- Mobile Menu Toggle Button -->
-        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Navigation Menu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-            <line x1="3" y1="12" x2="21" y2="12" id="menu-line-mid"/>
-            <line x1="3" y1="6" x2="21" y2="6" id="menu-line-top"/>
-            <line x1="3" y1="18" x2="21" y2="18" id="menu-line-bot"/>
-          </svg>
-        </button>
+        <!-- RIGHT: Auth & Account Navigation Actions -->
+        <div class="header-auth-container">
+          <!-- Logged-Out Actions -->
+          <div class="auth-group logged-out-group" id="auth-logged-out-group">
+            <button class="nav-link nav-auth-link" data-view="auth-view" id="nav-signin-btn">
+              <span id="nav-signin-text">Sign in</span>
+            </button>
+            <button class="btn-lime-primary nav-signup-cta" data-view="auth-view" id="nav-signup-btn">
+              Create account
+            </button>
+          </div>
+
+          <!-- Logged-In Actions (Hidden by default) -->
+          <div class="auth-group logged-in-group" id="auth-logged-in-group" style="display: none;">
+            <button class="user-pill-btn" data-view="account-view" id="nav-account-btn">
+              <span class="user-avatar-sm" id="nav-user-avatar">U</span>
+              <span class="user-name-text" id="nav-user-name">Account</span>
+            </button>
+            <button class="nav-link text-link" id="nav-logout-btn">
+              Sign out
+            </button>
+          </div>
+        </div>
       </nav>
+
+      <!-- Hidden backward-compatibility node for legacy JS target if needed -->
+      <button id="nav-auth-btn" data-view="auth-view" style="display: none;"><span id="nav-auth-text">Sign In</span></button>
+
+      <!-- Mobile Menu Toggle Button -->
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Navigation Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="12" x2="21" y2="12" id="menu-line-mid"/>
+          <line x1="3" y1="6" x2="21" y2="6" id="menu-line-top"/>
+          <line x1="3" y1="18" x2="21" y2="18" id="menu-line-bot"/>
+        </svg>
+      </button>
+
     </div>
   </header>
 
@@ -104,14 +132,6 @@
         <!-- Quote Card Component -->
         <article class="quote-card" id="quote-card" aria-live="polite">
 
-          <!-- Decorative Watermark SVGs -->
-          <svg class="quote-watermark quote-watermark-open" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
-          </svg>
-          <svg class="quote-watermark quote-watermark-close" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 0 1-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
-          </svg>
-
           <!-- Card Top Header Meta -->
           <div class="quote-card-header">
             <span class="category-tag" id="quote-category-tag">MOTIVATION</span>
@@ -135,7 +155,7 @@
             <div class="controls-row">
 
               <!-- Primary Action: New Quote Button -->
-              <button class="btn-primary" id="new-quote-btn" title="Generate New Quote (Space)">
+              <button class="btn-lime-primary" id="new-quote-btn" title="Generate New Quote (Space)">
                 <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
                   <path d="M3 3v5h5"/>
@@ -196,7 +216,7 @@
           <span>•</span>
           <span><kbd class="kbd-key">C</kbd> Copy</span>
           <span>•</span>
-          <span><kbd class="kbd-key">F</kbd> Favourite</span>
+          <span><kbd class="kbd-key">F</kbd> Save</span>
           <span>•</span>
           <span><kbd class="kbd-key">S</kbd> Listen</span>
         </div>
@@ -249,7 +269,7 @@
               <input type="password" id="signin-password" placeholder="••••••••" required autocomplete="current-password">
             </div>
 
-            <button type="submit" class="btn-primary form-submit-btn" id="signin-submit-btn">
+            <button type="submit" class="btn-lime-primary form-submit-btn" id="signin-submit-btn">
               <span>Sign In</span>
             </button>
 
@@ -287,7 +307,7 @@
               <input type="password" id="signup-confirm-password" placeholder="Re-enter your password" required autocomplete="new-password">
             </div>
 
-            <button type="submit" class="btn-primary form-submit-btn" id="signup-submit-btn">
+            <button type="submit" class="btn-lime-primary form-submit-btn" id="signup-submit-btn">
               <span>Create Account</span>
             </button>
 
@@ -338,6 +358,68 @@
 
   </div>
 
+  <!-- SUBSCRIPTION PRICING MODAL -->
+  <dialog id="pricing-modal" class="modal-overlay pricing-modal">
+    <div class="modal-card pricing-modal-card">
+      <button id="close-pricing-modal-btn" class="modal-close-icon" aria-label="Close Pricing Modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="pricing-modal-header text-center">
+        <h2 class="pricing-title">We've got a plan that's perfect for you</h2>
+        <p class="pricing-subtitle">Unlock more from your Quote Generator experience.</p>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-badge-row">
+          <span class="pricing-card-badge">PREMIUM</span>
+        </div>
+
+        <div class="pricing-price-container">
+          <span class="currency-symbol">$</span>
+          <span class="price-amount">5</span>
+          <span class="price-period">per month</span>
+        </div>
+
+        <ul class="pricing-features-list">
+          <li>
+            <span class="feature-check" aria-hidden="true">✓</span>
+            <span>Unlimited quote access</span>
+          </li>
+          <li>
+            <span class="feature-check" aria-hidden="true">✓</span>
+            <span>Unlimited saved quotes</span>
+          </li>
+          <li>
+            <span class="feature-check" aria-hidden="true">✓</span>
+            <span>Personal quote collection</span>
+          </li>
+          <li>
+            <span class="feature-check" aria-hidden="true">✓</span>
+            <span>Premium categories</span>
+          </li>
+          <li>
+            <span class="feature-check" aria-hidden="true">✓</span>
+            <span>Ad-free experience</span>
+          </li>
+        </ul>
+
+        <div class="pricing-actions">
+          <button id="upgrade-premium-btn" class="btn-lime-primary upgrade-cta-btn">
+            Upgrade to Premium
+          </button>
+
+          <button id="cancel-pricing-modal-btn" class="pricing-cancel-btn">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
   <!-- Protected Route Sign In Prompt Modal -->
   <dialog id="auth-prompt-modal" class="modal-overlay">
     <div class="modal-card auth-prompt-card">
@@ -357,7 +439,7 @@
           Create an account or sign in to save your favourite quotes and access them anytime across devices.
         </p>
         <div class="prompt-actions">
-          <button class="btn-primary" id="prompt-signin-btn">Sign In</button>
+          <button class="btn-lime-primary" id="prompt-signin-btn">Sign In</button>
           <button class="action-btn" id="prompt-signup-btn">Create Account</button>
         </div>
       </div>
@@ -379,7 +461,7 @@
           <label for="forgot-email">Email Address</label>
           <input type="email" id="forgot-email" placeholder="name@example.com" required>
         </div>
-        <button type="submit" class="btn-primary form-submit-btn margin-top">Send Reset Instructions</button>
+        <button type="submit" class="btn-lime-primary form-submit-btn margin-top">Send Reset Instructions</button>
       </form>
     </div>
   </dialog>
@@ -392,3 +474,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
