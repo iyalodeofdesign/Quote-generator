@@ -1,0 +1,17 @@
+## Quote Generator UI Redesign
+
+Today, I continued improving the Quote Generator application with a focus on making the interface feel more polished, modern, and closer to a professional SaaS product.
+
+### What I worked on
+Redesigned the navigation to use a full-width layout with a cleaner and more spacious structure.
+Updated the overall interface to follow a minimal SaaS design direction, inspired by the provided pricing-page reference.
+Improved the visual hierarchy of the Quote Generator while keeping the existing functionality intact.
+Added a subscription pricing experience with a $5/month Premium plan.
+Designed a pricing modal that appears 10 seconds after a user enters the application.
+Made the pricing modal appear only once per browser session to avoid repeatedly interrupting the user.
+Added a fixed Premium banner that appears above the navigation when the user cancels the pricing modal.
+Added the ability for users to click "View plans" on the banner to reopen the pricing modal.
+Made the pricing experience responsive for desktop and mobile.
+Updated the New Quote button from an outlined style to a filled lime-green CTA, making it more visually prominent.
+Added hover, active, and accessibility states to the New Quote button.
+Ensured the existing quote-generation, authentication, saved quotes, categories, sharing, and other core functionality remain intact.
