@@ -1,0 +1,37 @@
+## Journal Update
+
+## What I worked on
+
+This week I worked on the Quote Generator and focused on improving the functionality and user experience.
+
+## What I changed
+
+I added authentication for user accounts so users can securely create an account and sign in with their email address and password.
+
+This provides a personalised experience where each user's saved quotes can be associated with their account.
+
+## Why I made this decision
+
+Previously, saved quotes were not tied to an individual user account. Authentication creates a foundation for persistent personalisation and allows users to access their saved content consistently.
+
+## Users benefit
+
+Users can create and access their own account.
+Saved quotes are associated with the correct user.
+Users can return to the application and continue accessing their saved quotes.
+The experience feels more personalised and consistent.
+
+## Reworked Category Navigation
+
+I changed the category experience from having categories displayed directly within the navigation to using a dropdown menu.
+## What I learned
+
+## Why I made this change
+Having every category displayed as part of the navigation could make the interface feel crowded and take up valuable navigation space.
+
+The dropdown provides a cleaner way for users to discover and select different quote categories without overwhelming the main navigation.
+
+
+## Next steps
+
+Next step is to improve the user interface to be cleaner and easy to navigate
